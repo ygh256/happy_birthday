@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>生日快乐，廖志豪！</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "微软雅黑", sans-serif;
+      background: linear-gradient(to right, #ccefff, #e0f7ff);
+      color: #333;
+      overflow: hidden;
+      position: relative;
+    }
+    .countdown {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 18px;
+      background-color: rgba(255,255,255,0.2);
+      padding: 8px 15px;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+    }
+    .container {
+      max-width: 800px;
+      margin: 120px auto 30px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      animation: fadeIn 1s ease;
+      z-index: 1;
+      position: relative;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .message {
+      font-size: 24px;
+      min-height: 120px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeText 1s ease forwards;
+    }
+    @keyframes fadeText {
+      to { opacity: 1; }
+    }
+    button {
+      margin-top: 30px;
+      padding: 10px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      background-color: #ffffff;
+      color: #1e3c72;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #cce0ff;
+    }
+    .cake {
+      font-size: 50px;
+      margin-top: 20px;
+      animation: float 2s infinite alternate ease-in-out;
+    }
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+    .photo {
+      margin-top: 40px;
+    }
+    .photo img {
+      max-width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+    audio {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+    }
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 40px;
+      height: 60px;
+      border-radius: 50% 50% 50% 50%;
+      background-color: red;
+      opacity: 0.7;
+      animation: rise 10s linear infinite;
+    }
+    @keyframes rise {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-120vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="countdown" id="countdown">正在计算倒计时...</div>
+
+  <div class="container">
+    <h1>🎂 生日快乐，廖志豪！ 🎉</h1>
+    <div id="message" class="message"></div>
+    <button onclick="nextMessage()">下一句祝福</button>
+    <div class="cake">🎂</div>
+    <div class="photo">
+      <img src="https://i.pinimg.com/736x/54/13/3f/54133fa294c3b7da8b693f3a6c6791e0.jpg" alt="蛋糕" width="720" height="750">
+    </div>
+  </div>
+
+  <audio id="bgm" loop>
+    <source src="https://cdn.pixabay.com/audio/2024/06/27/audio_801c382f49.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const messages = [
+      "愿你天天开心，事事顺遂",
+      "学习越来越好，考试科科满意",
+      "愿你此生尽兴，赤诚善良，永不彷徨！",
+      "今天是你的节日，愿你心情如彩虹般缤纷！",
+      "愿你被世界温柔以待，也愿你成为自己的太阳！",
+      "愿你今后的日子比诗还美，梦还甜！",
+      "廖志豪，生日快乐！愿你在每个平凡的日子都能闪闪发光～"
+    ];
+    let index = 0;
+    const messageEl = document.getElementById('message');
+    function nextMessage() {
+      messageEl.style.opacity = 0;
+      setTimeout(() => {
+        messageEl.textContent = messages[index];
+        messageEl.style.animation = 'none';
+        void messageEl.offsetWidth;
+        messageEl.style.animation = 'fadeText 1s ease forwards';
+        index = (index + 1) % messages.length;
+      }, 300);
+    }
+    function startCountdown() {
+      const today = new Date();
+      let targetDate = new Date(today.getFullYear(), 4, 12);
+      if (today > targetDate) {
+        targetDate = new Date(today.getFullYear() + 1, 4, 12);
+      }
+      const diffTime = targetDate - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      document.getElementById("countdown").textContent = `距离廖志豪的生日还有 ${diffDays} 天`;
+    }
+    function generateBalloons() {
+      const colors = ["#ff6b6b", "#ffd93d", "#6bcf63", "#4d96ff", "#d66efd"];
+      for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement("div");
+        balloon.className = "balloon";
+        balloon.style.left = Math.random() * 100 + "vw";
+        balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        balloon.style.animationDuration = (6 + Math.random() * 6) + "s";
+        balloon.style.width = 30 + Math.random() * 20 + "px";
+        balloon.style.height = 40 + Math.random() * 30 + "px";
+        document.body.appendChild(balloon);
+      }
+    }
+    window.onload = () => {
+      nextMessage();
+      startCountdown();
+      generateBalloons();
+      const bgm = document.getElementById("bgm");
+      const tryPlay = () => {
+        const playPromise = bgm.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log("音乐自动播放成功");
+          }).catch(err => {
+            console.warn("自动播放失败，等待用户交互");
+            document.body.addEventListener("click", () => {
+              bgm.play();
+            }, { once: true });
+          });
+        }
+      };
+      tryPlay();
+    };
+  </script>
+</body>
+</html>
+
+
+
