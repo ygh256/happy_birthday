@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -8,11 +7,33 @@
     body {
       margin: 0;
       font-family: "微软雅黑", sans-serif;
-      background: linear-gradient(to right, #ccefff, #e0f7ff);
-      color: #333;
+      color: #fff;
       overflow: hidden;
       position: relative;
+      background: #000;
     }
+    
+    /* 星空背景 */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    
+    /* 流星效果 */
+    .meteors {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
     .countdown {
       position: absolute;
       top: 20px;
@@ -22,80 +43,139 @@
       padding: 8px 15px;
       border-radius: 10px;
       backdrop-filter: blur(5px);
+      z-index: 10;
     }
+    
     .container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 120px auto 30px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(10px);
       border-radius: 20px;
-      padding: 40px;
+      padding: 50px;
       text-align: center;
-      box-shadow: 0 0 20px rgba(255,255,255,0.2);
-      animation: fadeIn 1s ease;
-      z-index: 1;
+      box-shadow: 0 0 30px rgba(255,255,255,0.1);
+      animation: fadeIn 1.5s ease;
+      z-index: 2;
       position: relative;
+      border: 1px solid rgba(255,255,255,0.1);
     }
+    
     h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
+      font-size: 60px;
+      margin-bottom: 30px;
+      text-shadow: 
+        0 0 10px #ff0080, 
+        0 0 20px #ff0080, 
+        0 0 30px #ff0080, 
+        0 0 40px #ff00ff, 
+        0 0 70px #ff00ff, 
+        0 0 80px #ff00ff;
+      animation: textGlow 2s ease-in-out infinite alternate;
+      letter-spacing: 3px;
     }
+    
+    @keyframes textGlow {
+      0% {
+        text-shadow: 
+          0 0 10px #ff0080, 
+          0 0 20px #ff0080, 
+          0 0 30px #ff0080, 
+          0 0 40px #ff00ff, 
+          0 0 70px #ff00ff, 
+          0 0 80px #ff00ff;
+      }
+      100% {
+        text-shadow: 
+          0 0 20px #ff0080, 
+          0 0 30px #ff0080, 
+          0 0 40px #ff0080, 
+          0 0 50px #ff00ff, 
+          0 0 80px #ff00ff, 
+          0 0 90px #ff00ff;
+      }
+    }
+    
     .message {
-      font-size: 24px;
-      min-height: 120px;
-      line-height: 1.6;
+      font-size: 32px;
+      min-height: 150px;
+      line-height: 1.8;
       opacity: 0;
-      animation: fadeText 1s ease forwards;
+      animation: fadeText 1.2s ease forwards;
+      margin: 30px 0;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255,255,255,0.7);
     }
+    
     @keyframes fadeText {
       to { opacity: 1; }
     }
+    
     button {
-      margin-top: 30px;
-      padding: 10px 30px;
-      font-size: 18px;
+      margin-top: 40px;
+      padding: 15px 40px;
+      font-size: 22px;
       border: none;
       border-radius: 30px;
-      background-color: #ffffff;
+      background-color: rgba(255,255,255,0.9);
       color: #1e3c72;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: all 0.3s;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+      z-index: 3;
+      position: relative;
     }
+    
     button:hover {
       background-color: #cce0ff;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
     }
+    
     .cake {
-      font-size: 50px;
-      margin-top: 20px;
-      animation: float 2s infinite alternate ease-in-out;
+      font-size: 80px;
+      margin: 40px 0;
+      animation: float 2.5s infinite alternate ease-in-out;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.7));
     }
+    
     @keyframes float {
       from { transform: translateY(0); }
-      to { transform: translateY(-10px); }
+      to { transform: translateY(-15px); }
     }
+    
     .photo {
-      margin-top: 40px;
+      margin-top: 50px;
+      position: relative;
+      z-index: 2;
     }
+    
     .photo img {
       max-width: 100%;
       border-radius: 15px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+      border: 3px solid rgba(255,255,255,0.2);
     }
+    
     audio {
       position: fixed;
       bottom: 10px;
       left: 10px;
+      z-index: 10;
     }
+    
     .balloon {
       position: absolute;
       bottom: -100px;
       width: 40px;
       height: 60px;
       border-radius: 50% 50% 50% 50%;
-      background-color: red;
       opacity: 0.7;
       animation: rise 10s linear infinite;
+      z-index: 1;
     }
+    
     @keyframes rise {
       0% {
         transform: translateY(0) rotate(0deg);
@@ -106,9 +186,59 @@
         opacity: 0;
       }
     }
+    
+    /* 装饰小星星 */
+    .decoration-stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 42px;
+      }
+      .message {
+        font-size: 26px;
+      }
+      button {
+        font-size: 18px;
+        padding: 12px 30px;
+      }
+      .container {
+        padding: 30px 20px;
+        margin: 80px auto 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 36px;
+      }
+      .message {
+        font-size: 22px;
+      }
+      .cake {
+        font-size: 60px;
+      }
+    }
   </style>
 </head>
 <body>
+
+  <!-- 星空背景 -->
+  <div class="stars" id="stars"></div>
+  
+  <!-- 流星效果 -->
+  <div class="meteors" id="meteors"></div>
+  
+  <!-- 装饰小星星 -->
+  <div class="decoration-stars" id="decorationStars"></div>
 
   <div class="container">
     <h1>🎂 生日快乐，宝宝！ 🎉</h1>
@@ -131,20 +261,142 @@
       "愿你的每个愿望都能实现，每一天都充满欢笑与阳光！",
       "新的一岁，愿所有美好如期而至，所有幸运不期而遇！",
       "祝你生日快乐，健康平安，心想事成，万事如意！",
-    
     ];
+    
     let index = 0;
     const messageEl = document.getElementById('message');
+    
     function nextMessage() {
       messageEl.style.opacity = 0;
       setTimeout(() => {
         messageEl.textContent = messages[index];
         messageEl.style.animation = 'none';
         void messageEl.offsetWidth;
-        messageEl.style.animation = 'fadeText 1s ease forwards';
+        messageEl.style.animation = 'fadeText 1.2s ease forwards';
         index = (index + 1) % messages.length;
       }, 300);
     }
+    
+    // 创建星空背景
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const starsCount = 300;
+      
+      for (let i = 0; i < starsCount; i++) {
+        const star = document.createElement('div');
+        star.style.position = 'absolute';
+        star.style.width = Math.random() * 3 + 'px';
+        star.style.height = star.style.width;
+        star.style.backgroundColor = 'white';
+        star.style.borderRadius = '50%';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.opacity = Math.random() * 0.8 + 0.2;
+        star.style.boxShadow = '0 0 5px white';
+        
+        // 添加闪烁动画
+        const duration = Math.random() * 5 + 3;
+        star.style.animation = `twinkle ${duration}s infinite alternate`;
+        
+        starsContainer.appendChild(star);
+      }
+      
+      // 添加闪烁动画关键帧
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes twinkle {
+          0% { opacity: 0.2; }
+          100% { opacity: 0.9; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    
+    // 创建流星效果
+    function createMeteors() {
+      const meteorsContainer = document.getElementById('meteors');
+      const meteorsCount = 8;
+      
+      for (let i = 0; i < meteorsCount; i++) {
+        const meteor = document.createElement('div');
+        meteor.style.position = 'absolute';
+        meteor.style.width = '120px';
+        meteor.style.height = '2px';
+        meteor.style.background = 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)';
+        meteor.style.borderRadius = '50%';
+        meteor.style.left = Math.random() * 100 + '%';
+        meteor.style.top = Math.random() * 30 + '%';
+        meteor.style.opacity = '0';
+        meteor.style.transform = 'rotate(-45deg)';
+        
+        // 添加流星动画
+        const delay = Math.random() * 20;
+        const duration = Math.random() * 2 + 1;
+        meteor.style.animation = `meteorFall ${duration}s linear ${delay}s infinite`;
+        
+        meteorsContainer.appendChild(meteor);
+      }
+      
+      // 添加流星动画关键帧
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes meteorFall {
+          0% {
+            opacity: 0;
+            transform: translateX(0) translateY(0) rotate(-45deg);
+          }
+          10% {
+            opacity: 1;
+          }
+          70% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            transform: translateX(400px) translateY(400px) rotate(-45deg);
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    
+    // 创建装饰小星星
+    function createDecorationStars() {
+      const decorationContainer = document.getElementById('decorationStars');
+      const decorationCount = 15;
+      
+      for (let i = 0; i < decorationCount; i++) {
+        const star = document.createElement('div');
+        star.style.position = 'absolute';
+        star.style.width = '15px';
+        star.style.height = '15px';
+        star.style.backgroundColor = getRandomColor();
+        star.style.borderRadius = '50%';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.opacity = '0.7';
+        star.style.boxShadow = '0 0 10px currentColor';
+        star.style.animation = `pulse ${Math.random() * 3 + 2}s infinite alternate`;
+        
+        decorationContainer.appendChild(star);
+      }
+      
+      // 添加脉冲动画关键帧
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes pulse {
+          0% { transform: scale(1); opacity: 0.5; }
+          100% { transform: scale(1.2); opacity: 1; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    
+    function getRandomColor() {
+      const colors = ['#ff0080', '#ff00ff', '#00ffff', '#ffff00', '#00ff80', '#ff6b6b'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+    
     function startCountdown() {
       const today = new Date();
       let targetDate = new Date(today.getFullYear(), 4, 12);
@@ -154,6 +406,7 @@
       const diffTime = targetDate - today;
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
+    
     function generateBalloons() {
       const colors = ["#ff6b6b", "#ffd93d", "#6bcf63", "#4d96ff", "#d66efd"];
       for (let i = 0; i < 20; i++) {
@@ -167,10 +420,17 @@
         document.body.appendChild(balloon);
       }
     }
+    
+    // 页面加载完成后初始化
     window.onload = () => {
       nextMessage();
       startCountdown();
       generateBalloons();
+      createStars();
+      createMeteors();
+      createDecorationStars();
+      
+      // 自动播放背景音乐
       const bgm = document.getElementById("bgm");
       const tryPlay = () => {
         const playPromise = bgm.play();
@@ -190,6 +450,3 @@
   </script>
 </body>
 </html>
-
-
-
